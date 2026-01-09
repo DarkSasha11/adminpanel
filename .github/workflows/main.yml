@@ -1,10 +1,8 @@
-name: Python Bot 24/7
+name: CapyBot Online 24/7
 
 on:
   push:
     branches: [ main ]
-  schedule:
-    - cron: '0 */6 * * *' # Перезапуск каждые 6 часов на всякий случай
   workflow_dispatch:
 
 jobs:
@@ -12,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -22,5 +20,7 @@ jobs:
       - name: Install Libs
         run: pip install discord.py requests
 
-      - name: Start Bot
+      - name: Run Bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: python bot.py
